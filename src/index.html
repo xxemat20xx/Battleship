@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship</title>
+</head>
+<body>
+    <div id="messages"></div>
+    <div id="game-container">
+        <div id="player-board" class="board">
+            <h2>Player Board</h2>
+            <div id="player-grid" class="grid"><!-- render board here --></div> 
+        </div>
+        <div id="computer-board" class="board">
+            <h2>Computer Board</h2>
+            <div id="computer-grid" class="grid"><!-- render board here --></div> 
+        </div>
+        <div id="ships">
+            <h2>Drag to place Ships.</h2>
+            <div id="ship-container">
+                <div class="ship" draggable="true" data-length="5"></div>
+                <div class="ship" draggable="true" data-length="4"></div>
+                <div class="ship" draggable="true" data-length="3"></div>
+                <div class="ship" draggable="true" data-length="2"></div>
+                <div class="ship" draggable="true" data-length="1"></div>                
+            </div>
+            <div id="buttons">
+                <button id="start-game" disabled>Start</button>
+                <button id="reset-game">Reset</button>
+            </div>
+            <div id="scores">
+                <h3>Hit Score</h3>
+                <p>Player: <span id="player-score">0</span></p>
+                <p>Computer: <span id="computer-score">0</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
