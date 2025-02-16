@@ -13,4 +13,10 @@ export class DOM{
             }
         }
     }
+    startGame(btn, element, nextElToShow){
+        btn.addEventListener("click", () => {
+            element.style.display = "none";
+            nextElToShow.style.display = "block";
+        });
+    }
 }

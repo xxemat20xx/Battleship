@@ -1,27 +1,93 @@
-:root{}
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Oi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oi&display=swap');
+:root{
+  --black: #001219;
+  --grey: #2b2d42;
+  --red: #ae2012;
+  --light-red: #bb3e03;
+  --dark-red: #9b2226;
+  --main-white: #e9d8a6;
+  --teal: #005f73;
+  --teal-light: #94d2bd;
+}
 body{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background-color: var(--black);
+  color: var(--main-white);
 }
-.modal{
-  /* display: none; */
+.startgame-container{
+  z-index: 1;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: blanchedalmond;
+  background-color: var(--black);
+  color: var(--main-white);
   height: 100dvh;
   width: 100%;
- 
-}
-.modal-content{
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 3em 0;
+  font-size: 4rem;
+  font-family: "Bangers", serif;
+  font-weight: 400;
+  font-style: normal;
+  &.startgame-container button{
+    border: none;
+    background-color: var(--red);
+    color: var(--main-white);
+    width: 18rem;
+    height: 3rem;
+    border-radius: 4rem;
+    font-size: 2rem;
+    font-family: "Bangers", serif;
+  }
+  &.startgame-container button:hover{
+    background-color: var(--light-red);
+  }
+  &.startgame-container h1{
+    letter-spacing: 1rem;
+  }
 }
+.btn{
+  cursor: pointer;
+  border: none;
+    background-color: var(--red);
+    color: var(--main-white);
+    width: 6rem;
+    height: 3rem;
+    border-radius: 4rem;
+    font-size: 1rem;
+    font-family: "Bangers", serif;
+}
+.modal{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--black);
+  height: 100dvh;
+  width: 100%;
+  color: var(--main-white);
+  &.modal h2{
+    text-align: center;
+  }
+  &.modal .modal-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
 
 #playerboard,
 #ingameboard,
@@ -29,20 +95,24 @@ body{
   display: grid;
   grid-template-columns: repeat(10, 30px);
   grid-template-rows: repeat(10, 30px);
-  gap: 2px;
- 
+  gap: 8px;
 }
 .cell{
   width: 30px;
   height: 30px;
-  border: 1px solid black;
-  cursor: pointer;
+  border: 3px solid var(--main-white);
+  background-color: var(--grey);
+  cursor: pointer
+}
+#oppenentboard .cell:hover{
+  background-color: var(--main-white);
 }
 .ship-cell,.ship-placed{
   width: 30px;
   height: 30px;
-  background-color: red;
-  border: 1px solid black;
+  margin:0 2px;
+  background-color: var(--red);
+  border: 1px solid var(--main-white);
 }
 
 .draggable-ship-container{
@@ -50,7 +120,6 @@ body{
   padding: 0 1rem;
   min-width: 520px;
   grid-template-columns: repeat(2, 1fr);
-
 }
 
 .ship{
@@ -59,10 +128,14 @@ body{
 }
 /* main */
 main{
-  display: none;
-  justify-content: space-between;
+  display: block;
   padding: 1rem;
+  text-align: center;
 } 
+.gameboards{
+  display: flex;
+  justify-content: space-around;
+}
 .modal-button{
   margin: auto;
   text-align: center;

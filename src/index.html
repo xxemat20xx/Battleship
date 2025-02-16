@@ -6,12 +6,19 @@
     <title>Battleship</title>
 </head>
 <body>
-    <h1>Battleship</h1>
+  
+    <div class="startgame-container">
+        <h1>Battleship</h1>
+        <button class="btn" id="btn-game-start">START</button>
+    </div>
     <div class="modal">
+        <h2>Place ships to start the game.</h2>
         <div class="modal-content">
+    
             <div id="playerboard">
                 <!-- append board here -->
             </div>
+        
             <div class="draggable-ship-container">
                     <div class="ships-content">  
                         <h3>Cruisers</h3>
@@ -67,21 +74,23 @@
 
     <!-- main -->
     <main>
-        <div id="ingame-playerboard-container">
-            <h3>Your board</h3>
-            <p>Score:<span id="playerScore"> 0</span></p>
-            <div id="ingameboard">
-                <!-- append board here -->
+        <h1>Battleship</h1>
+        <div class="gameboards">
+            <div id="ingame-playerboard-container">
+                <h3>Your board</h3>
+                <p>Score:<span id="playerScore"> 0</span></p>
+                <div id="ingameboard">
+                    <!-- append board here -->
+                </div>
+            </div>
+            <div id="ingame-enemyboard-container">
+                <h3>Oppenent Board</h3>
+                <p>Score:<span id="opponentScore"> 0</span></p>
+                <div id="oppenentboard">
+                    <!-- append board here -->
+                </div>
             </div>
         </div>
-        <div id="ingame-enemyboard-container">
-            <h3>Oppenent Board</h3>
-            <p>Score:<span id="opponentScore"> 0</span></p>
-            <div id="oppenentboard">
-                <!-- append board here -->
-            </div>
-        </div>
-
     </main>
 </body>
 </html>

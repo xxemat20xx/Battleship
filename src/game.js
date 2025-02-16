@@ -1,8 +1,6 @@
 import { DOM } from './dom';
 import { Gameboard } from './gameboard';
 
-
-
 export class Game{
     constructor(){
         //elements
@@ -11,6 +9,9 @@ export class Game{
         this.startGameBtn = document.querySelector("#startGame");
         this.modal = document.querySelector(".modal");
         this.main = document.querySelector("main");
+        this.startGameContainer = document.querySelector(".startgame-container");
+        this.start = document.querySelector("#btn-game-start");
+
         //ingame board el
         this.ingameBoard = document.querySelector("#ingameboard");
         this.opponentBoard = document.querySelector("#oppenentboard");
@@ -25,12 +26,16 @@ export class Game{
         this.gameboard = new Gameboard();
     }
     init() {
+        
+        
       const dom = this.dom;
       const gameboard = this.gameboard;
-  
+        
+      //hide startgame container button, container, and the next element to show.
+      dom.startGame(this.start, this.startGameContainer, this.modal);
       // Create setup board
       dom.createBoard(this.playerBoard, gameboard.board);
-  
+        
       // Drag and drop logic for ships
       this.ships.forEach(ship => {
           ship.addEventListener("dragstart", () => {
@@ -71,6 +76,7 @@ export class Game{
                   // Hide the ship after placing
                   this.draggedShip.style.display = "none";
                   this.draggedShip.parentElement.remove();
+                  
               }
           }
       });
@@ -85,7 +91,7 @@ export class Game{
 
     // 🚀 Create the in-game board
     this.dom.createBoard(this.ingameBoard, this.gameboard.board);
-    
+    this.dom.createBoard(this.opponentBoard, this.gameboard.board)
     // ✅ Transfer placed ships to in-game board
     this.occupiedCell.forEach(({ row, col, shipSize }) => {
         this.gameboard.placeShip(this.ingameBoard, row, col, shipSize);
@@ -97,7 +103,7 @@ export class Game{
     // Set game started
     this.gameStarted = true;
 
-    this.main.style.display = "flex";
+    this.main.style.display = "block";
 }
 
 }
