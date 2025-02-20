@@ -4,7 +4,4 @@ export class Player{
         this.name = name;
         this.board = new Gameboard();
     }
-    placeShip(board, startRow, startCol, size){
-        this.board.placeShip(board, startRow, startCol, size);
-    }
 }

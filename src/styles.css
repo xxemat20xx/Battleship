@@ -104,17 +104,20 @@ body{
   background-color: var(--grey);
   cursor: pointer
 }
+
 #oppenentboard .cell:hover{
   background-color: var(--main-white);
 }
 .ship-cell,.ship-placed{
   width: 30px;
   height: 30px;
-  margin:0 2px;
   background-color: var(--red);
   border: 1px solid var(--main-white);
 }
-
+.cell.computer-ship{
+  border: 3px solid var(--main-white);
+  background-color: var(--red);
+}
 .draggable-ship-container{
   display: grid;
   padding: 0 1rem;
@@ -128,7 +131,7 @@ body{
 }
 /* main */
 main{
-  display: block;
+  display: none;
   padding: 1rem;
   text-align: center;
 } 
