@@ -5,60 +5,83 @@ export class Gameboard{
         this.ships = [];
         this.missedAttacks = [];
         this.board = this.createGrid();
-        
+ 
     }
     createGrid(){
         return Array.from({length: 10}, () => Array(10).fill(null));
     }
-    canPlaceShip(board, startRow, startCol, size){ 
+    getTotalHits(){
+        console.log(this.ships.reduce((total, ship) => total + ship.hitCounts, 0));
+    }
+
+    getTotalShipLength() {
+        console.log(this.ships.reduce((total, ship) => total + ship.length, 0));
+    }
+    canPlaceShip(boardElement, startRow, startCol, size){ 
         for(let i = 0; i < size; i++){
-            const cell = board.querySelector(`.cell[data-row="${startRow}"][data-col="${startCol + i}"]`);
+            const cell = boardElement.querySelector(`.cell[data-row="${startRow}"][data-col="${startCol + i}"]`);
             if(!cell || cell.classList.contains("ship-placed")){
                 return false;
             }
         }
         return true;
     }
-    placeShip(board, startRow, startCol, size, shipId){
-        const ship = new Ship(size, shipId)
-        for(let i = 0; i < size; i++){
-            this.board[startRow][startCol + i] = ship;
-            const cell = board.querySelector(`.cell[data-row="${startRow}"][data-col="${startCol + i}"]`);
-            cell.classList.add("ship-placed");
+    
+    placeShip(boardElement, startRow, startCol, length, shipId, isHorizontal = true) {
+        const ship = new Ship(length, shipId); // Create ship instance once
+        for (let i = 0; i < length; i++) {
+            const row = isHorizontal ? startRow : startRow + i;
+            const col = isHorizontal ? startCol + i : startCol;
+            const cell = boardElement.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            if (cell) {
+                cell.classList.add("ship-placed");
+                cell.setAttribute("data-ship-id", shipId);
+    
+                // Store the Ship instance to array
+                this.board[row][col] = ship;
+            }
         }
     }
     computerPlaceShips(boardElement){
         const lengths = [5, 4, 3, 2, 1];
+        let shipId = 1;
         lengths.forEach(length => {
             let placed = false;
             while(!placed){
                 const row = Math.floor(Math.random() * 10);
                 const col = Math.floor(Math.random() * (10 - length));
-
+              
                 if(this.canPlaceShip(boardElement, row, col, length)){
-                    this.ships.push(new Ship(length));
-             
-                    this.placeShip(boardElement, row, col, length);
+                    const newShip = new Ship(length, `ship-${shipId}`);
+                    this.ships.push(newShip);
+                    this.placeShip(boardElement, row, col, length, newShip.id);
 
                     for(let i = 0; i < length; i++){
                         const cell = boardElement.querySelector(`.cell[data-row="${row}"][data-col="${col + i}"]`);
                         cell.classList.add("ship-placed", "computer-ship");
+                        cell.setAttribute("data-ship-id", newShip.id)
                     }
                     placed = true;
+                    shipId++;
                 }
             }
         });
     }
-    receiveAttack(row, col){
+    receiveAttack(row, col) {
         const target = this.board[row][col];
-       
-        if(target === null){
+        
+        if (target === null) {
             this.board[row][col] = "miss";
             this.missedAttacks.push([row, col]);
-        } else if(target instanceof Ship){
+        } else if (target instanceof Ship) {
             this.board[row][col] = "hit";
-            // this.board[row][col].recordHit();
-        } 
+            target.recordHit();
+           this.getTotalHits();
+           this.getTotalShipLength();
+            if (target.isSunk()) {
+                console.log("Ship Sunk.");
+            }
+        }
     }
     allShipSunk(){
         return this.ships.every(ship => ship.isSunk());

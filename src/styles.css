@@ -3,6 +3,7 @@
 :root{
   --black: #001219;
   --grey: #2b2d42;
+  --light-grey: #62668e;
   --red: #ae2012;
   --light-red: #bb3e03;
   --dark-red: #9b2226;
@@ -67,6 +68,11 @@ body{
     font-size: 1rem;
     font-family: "Bangers", serif;
 }
+.btn:disabled{
+  background-color: var(--grey);
+  cursor: no-drop;
+  color: var(--light-grey);
+}
 .modal{
   display: none;
   position: absolute;
@@ -91,7 +97,7 @@ body{
 
 #playerboard,
 #ingameboard,
-#oppenentboard{
+#computerboard{
   display: grid;
   grid-template-columns: repeat(10, 30px);
   grid-template-rows: repeat(10, 30px);
@@ -105,7 +111,7 @@ body{
   cursor: pointer
 }
 
-#oppenentboard .cell:hover{
+#computerboard .cell:hover{
   background-color: var(--main-white);
 }
 .ship-cell,.ship-placed{

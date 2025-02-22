@@ -1,14 +1,16 @@
-export class Ship{
-    constructor(length, id){
+export class Ship {
+    constructor(length, id) {
         this.length = length;
-        this.hitCounts = 0;
         this.id = id;
+        this.hitCounts = 0;
     }
-    recordHit(){
+
+    recordHit() {
         this.hitCounts++;
-        return this.hitCounts;
+        return this.hitCounts + this.length;
     }
-    isSunk(){
+
+    isSunk() {
         return this.hitCounts >= this.length;
     }
 }

@@ -3,13 +3,8 @@ import { Gameboard } from "./gameboard";
 import { Ship } from "./ship";
 export class DOM{
     constructor(){
-        // elements
-        this.ships = document.querySelectorAll(".ship");
-        this.playerBoardElement = document.querySelector("#playerboard");
-
          //player board and opponent board
          this.ingameBoard = document.querySelector("#ingameboard");
-         this.opponentBoard = document.querySelector("#oppenentboard");
 
          this.startGameContainer = document.querySelector(".startgame-container");
          this.mainPageStart = document.querySelector("#btn-game-start");
