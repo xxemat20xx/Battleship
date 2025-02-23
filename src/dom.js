@@ -1,6 +1,6 @@
 import { Game } from "./game";
-import { Gameboard } from "./gameboard";
 import { Ship } from "./ship";
+
 export class DOM {
   constructor() {
     //player board and opponent board
