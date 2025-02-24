@@ -10,6 +10,7 @@ export class DOM {
     this.mainPageStart = document.querySelector("#btn-game-start");
     this.modal = document.querySelector(".modal");
     this.main = document.querySelector("main");
+    this.loadingScreen = document.querySelector(".loading-screen");
     this.ship = new Ship();
   }
   init() {
@@ -35,5 +36,11 @@ export class DOM {
   }
   updateScore(el) {
     el.innerHTML = this.ship.recordHit();
+  }
+  renderLoadingScreen() {
+    setTimeout(() => {
+      this.loadingScreen.style.display = "none";
+    }, 2000);
+    this.loadingScreen.style.display = "flex";
   }
 }

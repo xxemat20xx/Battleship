@@ -6,9 +6,20 @@
     <title>Battleship</title>
 </head>
 <body>
-  
+    <div class="loading-screen">
+      
+      
+        <div class="loader"></div>
+        <div class="loader-img-container">
+            <p>Initializing board...</p>
+            <img src="./imgs/ship2-01.png" alt="">
+        </div>
+      </div>
     <div class="startgame-container">
-        <h1>Battleship</h1>
+        <div class="img-container">
+            <img src="./imgs/ship1-01.png" alt="...">
+        </div>
+        <h1>Battleship Game</h1>
         <button class="btn" id="btn-game-start">START</button>
     </div>
     <div class="modal">
@@ -78,23 +89,21 @@
         <div class="gameboards">
             <div id="ingame-playerboard-container">
                 <h3>Your board</h3>
-                <p>Score:<span id="playerScore"></span></p>
+                <p>Score:<span id="playerScore"> 0</span></p>
                 <div id="ingameboard">
                     <!-- append board here -->
                 </div>
             </div>
             
             <div id="indicator-container">
-                <div id="turn-indicator">
                     <h4 id="turnMessage"></h4>
-                </div>
-           
             </div>
             <div id="ingame-enemyboard-container">
                 <h3>Oppenent Board</h3>
                 <p>Score:<span id="opponentScore"> 0</span></p>
                 <div id="computerboard">
                     <!-- append board here -->
+                    
                 </div>
             </div>
         </div>
