@@ -113,6 +113,9 @@ body{
   grid-template-rows: repeat(10, 30px);
   gap: 8px;
 }
+#computerboard .cell.hit{
+  background-color: var(--red);
+}
 .cell{
   width: 30px;
   height: 30px;
@@ -121,6 +124,9 @@ body{
   cursor: pointer
 }
 
+#computerboard .cell{
+  background-color: var(--grey);
+}
 #computerboard .cell:hover{
   background-color: var(--main-white);
 }
@@ -152,11 +158,9 @@ main{
   display: none;
   padding: 1rem;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 } 
-.gameboards{
-  display: flex;
-  justify-content: space-around;
-}
 .modal-button{
   margin: auto;
   text-align: center;
@@ -166,6 +170,7 @@ main{
   display: flex;
   justify-content: space-around;
   align-items: center;
+
 }#turnMessage{
   font-size: 3rem;
   font-family: "Bangers", serif;
@@ -174,46 +179,49 @@ main{
 }
 /* loading screen */
 .loading-screen {
-
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--black);
-  color: var(--main-white);
-  height: 100dvh;
-  width: 100%;
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff; /* Background color */
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: 4rem;
-  z-index: 1;
+  align-items: center;
+  text-align: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-in-out;
 }
 
-.loader {
-  border: 4px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 4px solid #3498db;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
+.loading-logo {
+  width: 100px; /* Adjust as needed */
+  height: auto;
+  margin-bottom: 20px;
 }
-.loader-img-container{
-  width: 620px;
-  height: 400px;
-  display: flex;
-  font-size: 2rem;
-  align-items: center;
-  justify-content: center;
+
+p {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
 }
-.loader-img-container img{
-  width: 10%;
-  height: 30%;
+
+.progress-container {
+  width: 80%;
+  max-width: 400px;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
 }
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background-color: #3498db;
+  transition: width 0.5s ease-in-out;
+}
+/* if gameover */
+.win-statement{
+  display: none;
 }

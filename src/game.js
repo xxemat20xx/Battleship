@@ -91,12 +91,9 @@ export class Game {
     });
   }
   startGame() {
-    this.dom.renderLoadingScreen();
     this.isGameStarted = true;
-    if (!this.turn || !this.isGameStarted) return;
+    this.dom.renderLoadingScreen(); //loading screen
 
-    //
-    this.gameStarted = true;
     this.dom.main.style.display = "block";
     this.dom.modal.style.display = "none";
     this.turnMsg.textContent = "Player's Turn";
@@ -116,6 +113,7 @@ export class Game {
 
     //click attack handler on computer board
     this.computerBoardElement.addEventListener("click", (e) => {
+      if (!this.turn) return;
       const cell = e.target.closest(".cell");
       if (
         !cell ||
@@ -130,29 +128,37 @@ export class Game {
     });
   }
   playerAttack(row, col) {
+    if (!this.turn || !this.isGameStarted) return; // Prevent attack if it's not player's turn or game is not started
+
     this.computer.receiveAttack(row, col);
     const computerCell = document.querySelector(
       `#computerboard .cell[data-row="${row}"][data-col="${col}"]`,
     );
     const cellState = this.computer.board[row][col];
-    if (this.isGameStarted && cellState === "miss") {
+
+    if (cellState === "miss") {
       computerCell.classList.add("miss");
       computerCell.textContent = "O";
       this.turnMsg.textContent = "Computer's Turn";
+      this.turn = false; // Player's turn is disabled
 
-      // add computer attack function if attack is missed
+      // Computer attacks after a delay
       setTimeout(() => {
         this.computerAttack();
       }, 2000);
     } else if (cellState === "hit") {
       computerCell.classList.add("hit");
       computerCell.textContent = "X";
+      this.turnMsg.textContent = "Player's Turn";
+      this.turn = true; // Player gets another turn
 
       if (this.computer.allShipSunk()) {
-        console.log("All ship sunked, you've won.");
+        console.log("All ships sunk, you've won!");
+        this.isGameStarted = false;
       }
     }
   }
+
   computerAttack() {
     let row, col, playerCell;
     do {
@@ -165,17 +171,20 @@ export class Game {
       playerCell.classList.contains("hit") ||
       playerCell.classList.contains("miss")
     );
-    this.player.receiveAttack(row, col);
 
+    this.player.receiveAttack(row, col);
     const cellState = this.player.board[row][col];
+
     if (cellState === "miss") {
       playerCell.classList.add("miss");
       playerCell.textContent = "O";
       this.turnMsg.textContent = "Player's Turn";
+      this.turn = true; // Restore player's turn after the computer attack
     } else if (cellState === "hit") {
       playerCell.classList.add("hit");
       playerCell.textContent = "X";
       this.dom.updateScore(this.computerScore);
+
       setTimeout(() => {
         this.computerAttack();
       }, 2000);

@@ -6,15 +6,19 @@
     <title>Battleship</title>
 </head>
 <body>
+    <!-- loading screen -->
     <div class="loading-screen">
-      
-      
-        <div class="loader"></div>
-        <div class="loader-img-container">
-            <p>Initializing board...</p>
-            <img src="./imgs/ship2-01.png" alt="">
+        <img src="./imgs/ship1-01.png" alt="Loading Logo" class="loading-logo">
+        <p>Loading...</p>
+        <div class="progress-container">
+          <div class="progress-bar"></div>
         </div>
       </div>
+      <!-- win statement container -->
+       <div class="win-statement">
+        <h1 id="win-statement-text"></h1>
+        <button class="btn" id="btn-restart">Restart</button>
+       </div>
     <div class="startgame-container">
         <div class="img-container">
             <img src="./imgs/ship1-01.png" alt="...">

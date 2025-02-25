@@ -38,9 +38,21 @@ export class DOM {
     el.innerHTML = this.ship.recordHit();
   }
   renderLoadingScreen() {
-    setTimeout(() => {
-      this.loadingScreen.style.display = "none";
-    }, 2000);
-    this.loadingScreen.style.display = "flex";
+    const progressBar = document.querySelector(".progress-bar");
+
+    let progress = 0;
+    this.loadingScreen.style.display = "flex"; //loading screen show first
+    const interval = setInterval(() => {
+      progress += 10; // Increment progress
+      progressBar.style.width = progress + "%";
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          this.loadingScreen.style.display = "none";
+        }, 500); // Delay before hiding
+        this.loadingScreen.style.display = "none";
+      }
+    }, 500); // Adjust speed
   }
 }
