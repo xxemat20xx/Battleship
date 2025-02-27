@@ -27,6 +27,7 @@ export class Game {
     this.turnMsg = document.querySelector("#turnMessage");
     this.playerScore = document.querySelector("#playerScore");
     this.computerScore = document.querySelector("#opponentScore");
+    this.draggableShips = document.querySelectorAll(".ships-content");
   }
   initBoard() {
     //start game
@@ -84,7 +85,11 @@ export class Game {
         // Enable start button only when all ships are placed
         if (this.registeredShip.length === this.ships.length) {
           this.startGameBtn.disabled = false;
+       
+          document.querySelector(".draggable-ship-container").remove();
+          document.querySelector(".modal h2").innerHTML = "Alrighty, let set sail!"
         }
+
         this.draggedShip.style.display = "none";
         this.draggedShip.parentElement.remove();
       }
@@ -154,6 +159,7 @@ export class Game {
 
       if (this.computer.allShipSunk()) {
         console.log("All ships sunk, you've won!");
+        this.turnMsg.textContent = "You've won!"
         this.isGameStarted = false;
       }
     }
@@ -162,32 +168,39 @@ export class Game {
   computerAttack() {
     let row, col, playerCell;
     do {
-      row = Math.floor(Math.random() * 10);
-      col = Math.floor(Math.random() * 10);
-      playerCell = document.querySelector(
-        `#ingameboard .cell[data-row="${row}"][data-col="${col}"]`,
-      );
+        row = Math.floor(Math.random() * 10);
+        col = Math.floor(Math.random() * 10);
+        playerCell = document.querySelector(
+            `#ingameboard .cell[data-row="${row}"][data-col="${col}"]`
+        );
     } while (
-      playerCell.classList.contains("hit") ||
-      playerCell.classList.contains("miss")
+        playerCell.classList.contains("hit") ||
+        playerCell.classList.contains("miss")
     );
 
     this.player.receiveAttack(row, col);
     const cellState = this.player.board[row][col];
 
     if (cellState === "miss") {
-      playerCell.classList.add("miss");
-      playerCell.textContent = "O";
-      this.turnMsg.textContent = "Player's Turn";
-      this.turn = true; // Restore player's turn after the computer attack
+        playerCell.classList.add("miss");
+        playerCell.textContent = "O";
+        this.turnMsg.textContent = "Player's Turn";
+        this.turn = true; // Restore player's turn after the computer attack
     } else if (cellState === "hit") {
-      playerCell.classList.add("hit");
-      playerCell.textContent = "X";
-      this.dom.updateScore(this.computerScore);
+        playerCell.classList.add("hit");
+        playerCell.textContent = "X";
+        this.dom.updateScore(this.computerScore);
 
-      setTimeout(() => {
-        this.computerAttack();
-      }, 2000);
+        if (this.player.allShipSunk()) {
+            console.log("All ships sunk, computer won!");
+            console.log(this.player.ships)
+            this.turnMsg.textContent = "Computer won!";
+            this.isGameStarted = false;
+        } else {
+            setTimeout(() => {
+                this.computerAttack();
+            }, 2000);
+        }
     }
-  }
+}
 }

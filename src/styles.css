@@ -1,183 +1,141 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Oi&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 :root{
-  --black: #001219;
-  --grey: #2b2d42;
-  --light-grey: #62668e;
-  --red: #ae2012;
-  --light-red: #bb3e03;
-  --dark-red: #9b2226;
-  --main-white: #e9d8a6;
-  --teal: #005f73;
-  --teal-light: #94d2bd;
+  --cream: #fdf0d5;
+  --navy: #003049;
+  --sky: #669bbc;
+  --red: #c1121f;
+  --dark-red: #780000; 
+  --white: #f9f7f3;
 }
 body{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", serif;
-  font-optical-sizing: auto;
+  background-color: var(--cream);
+  font-family: "Bangers", system-ui;
   font-weight: 400;
   font-style: normal;
-  background-color: var(--black);
-  color: var(--main-white);
 }
+.btn:disabled{
+  cursor: no-drop;
+  background-color: var(--sky);
+}
+.btn:disabled:hover{
+  background-color: var(--sky);
+}
+
+/* startgame */
 .startgame-container{
-  z-index: 1;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--black);
-  color: var(--main-white);
-  height: 100dvh;
   width: 100%;
+  height: 100dvh;
+  margin: auto;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
-  font-family: "Bangers", serif;
-  font-weight: 400;
-  font-style: normal;
-  &.startgame-container button{
-    border: none;
-    background-color: var(--red);
-    color: var(--main-white);
-    width: 18rem;
-    height: 3rem;
-    border-radius: 4rem;
-    font-size: 2rem;
-    font-family: "Bangers", serif;
-  }&.startgame-container .img-container{
-    max-width: 620px;
-    height: 500px;
-    position: relative;
-    top: 30%;
-    transform: rotate(-30deg);
-  }&.startgame-container .img-container img{
-    width: 100%;
-    height: 100%;
-  }
-  &.startgame-container button:hover{
-    background-color: var(--light-red);
-  }
-  &.startgame-container h1{
-    letter-spacing: 1rem;
-  }
-}
-.btn{
-  cursor: pointer;
-  border: none;
-    background-color: var(--red);
-    color: var(--main-white);
-    width: 6rem;
-    height: 3rem;
-    border-radius: 4rem;
-    font-size: 1rem;
-    font-family: "Bangers", serif;
-}
-.btn:disabled{
-  background-color: var(--grey);
-  cursor: no-drop;
-  color: var(--light-grey);
-}
-.modal{
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--black);
-  height: 100dvh;
-  width: 100%;
-  margin-top: 4rem;
-  color: var(--main-white);
-  &.modal h2{
-    text-align: center;
-  }
-  &.modal .modal-content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
+}.startgame-container h1{ 
+  font-size: 5rem;
+  letter-spacing: 1rem;
 }
 
+.startgame-container .img-container{
+  width: 280px;
+  height: 118px;
+  transform: rotate(-18deg);
+  margin-right: 4rem;
+  z-index: 1;
+}
+.startgame-container .img-container img{width: 100%;}
+.startgame-container .btn{font-size: 1.5rem;}
 
-#playerboard,
-#ingameboard,
-#computerboard{
+/* cells css */
+#playerboard{
   display: grid;
   grid-template-columns: repeat(10, 30px);
   grid-template-rows: repeat(10, 30px);
-  gap: 8px;
-}
-#computerboard .cell.hit{
-  background-color: var(--red);
+  gap: 2px;
+  background-color: var(--white);
 }
 .cell{
   width: 30px;
   height: 30px;
-  border: 3px solid var(--main-white);
-  background-color: var(--grey);
-  cursor: pointer
+  border: 2px solid var(--navy);
+  cursor: pointer;
 }
-
-#computerboard .cell{
-  background-color: var(--grey);
-}
-#computerboard .cell:hover{
-  background-color: var(--main-white);
-}
-.ship-cell,.ship-placed{
-  width: 30px;
-  height: 30px;
-  background-color: var(--red);
-  border: 1px solid var(--main-white);
-}
-.cell.computer-ship{
-  border: 3px solid var(--main-white);
-  background-color: var(--red);
+/* draggable ship css */
+.modal{
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2em 0;
 }
 .draggable-ship-container{
   display: grid;
   padding: 0 1rem;
   min-width: 520px;
-  margin-left: 5rem;
-  
   grid-template-columns: repeat(2, 1fr);
+  text-align: left;
 }
-
+.modal-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.modal-button{
+  margin-top: 3em;
+}
+.modal-button button{
+  width: 7rem;
+  height: 3rem;
+}
+.ship-cell{
+  width: 30px;
+  height: 30px;
+  background-color: var(--red);
+  border: 1px solid black;
+}
+.ship-placed{
+  width: 30px;
+  height: 30px;
+  background-color: var(--red);
+}
 .ship{
   display: flex;
   cursor:grab;
 }
-/* main */
+/* GAME STARTED CSS */
 main{
-  display: none;
-  padding: 1rem;
   text-align: center;
-  align-items: center;
-  justify-content: center;
-} 
-.modal-button{
-  margin: auto;
-  text-align: center;
+  padding: 0 2em;
   margin: 2em 0;
+}
+#ingameboard,
+#computerboard{
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 2px;
+  background-color: var(--white);
 }
 .gameboards{
   display: flex;
-  justify-content: space-around;
   align-items: center;
-
-}#turnMessage{
-  font-size: 3rem;
-  font-family: "Bangers", serif;
-  font-weight: 400;
-  font-style: normal;
+  justify-content: space-between;
+  width: 100%;
 }
-/* loading screen */
+  .cell.ship-placed.computer-ship{
+    background-color: var(--white);
+  }
+.cell.ship-placed.computer-ship.hit{
+  background-color: var(--red);
+}
+.cell.miss{
+  background-color: var(--navy);
+  color: var(--white);
+}
+/* LOADING SCREEN CSS */
 .loading-screen {
   display: none;
   position: fixed;
@@ -199,13 +157,6 @@ main{
   height: auto;
   margin-bottom: 20px;
 }
-
-p {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 15px;
-}
-
 .progress-container {
   width: 80%;
   max-width: 400px;
@@ -221,7 +172,23 @@ p {
   background-color: #3498db;
   transition: width 0.5s ease-in-out;
 }
-/* if gameover */
-.win-statement{
+
+.btn{
+  width: 10rem;
+  height: 4rem;
+  border: none;
+  background-color: var(--red);
+  border-radius: 3rem;
+  font-family: "Bangers", system-ui;
+  color: var(--cream);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.btn:hover{background-color: var(--dark-red);}
+
+/* hide erase later*/
+.loading-screen,
+.win-statement,
+main{
   display: none;
 }
