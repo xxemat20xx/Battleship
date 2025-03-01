@@ -7,7 +7,7 @@ export class DOM {
     this.ingameBoard = document.querySelector("#ingameboard");
 
     this.startGameContainer = document.querySelector(".startgame-container");
-    this.mainPageStart = document.querySelector("#btn-game-start");
+    this.modalStartBtn = document.querySelector("#btn-game-start");
     this.modal = document.querySelector(".modal");
     this.main = document.querySelector("main");
     this.loadingScreen = document.querySelector(".loading-screen");
@@ -15,7 +15,7 @@ export class DOM {
   }
   init() {
     const game = new Game();
-    this.mainPageStart.addEventListener("click", () => {
+    this.modalStartBtn.addEventListener("click", () => {
       this.startGameContainer.style.display = "none";
       this.modal.style.display = "block";
       game.initBoard();

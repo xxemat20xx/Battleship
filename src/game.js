@@ -1,16 +1,17 @@
 import { DOM } from "./dom";
 import { Gameboard } from "./gameboard";
-
+import { Player } from "./player";
 export class Game {
   constructor() {
     this.draggedShip = null;
     this.isGameStarted = false;
     this.turn = true;
     this.registeredShip = [];
+    this.isHorizontal = true;
     // imported classes
     this.dom = new DOM();
-    this.player = new Gameboard(); //your board
-    this.computer = new Gameboard(); //computer board;
+    this.player = new Player("Player"); //your board
+    this.computer = new Player("Computer"); //computer board;
 
     //board elements
     this.playerBoardElement = document.querySelector("#playerboard");
@@ -97,8 +98,9 @@ export class Game {
   }
   startGame() {
     this.isGameStarted = true;
-    this.dom.renderLoadingScreen(); //loading screen
-
+    // this.dom.renderLoadingScreen(); //loading screen
+    console.log(this.player)
+    console.log(this.computer)
     this.dom.main.style.display = "block";
     this.dom.modal.style.display = "none";
     this.turnMsg.textContent = "Player's Turn";
@@ -139,8 +141,8 @@ export class Game {
     const computerCell = document.querySelector(
       `#computerboard .cell[data-row="${row}"][data-col="${col}"]`,
     );
-    const cellState = this.computer.board[row][col];
-
+    const cellState = this.computer.board.board[row][col];
+    
     if (cellState === "miss") {
       computerCell.classList.add("miss");
       computerCell.textContent = "O";
@@ -156,8 +158,9 @@ export class Game {
       computerCell.textContent = "X";
       this.turnMsg.textContent = "Player's Turn";
       this.turn = true; // Player gets another turn
+      this.dom.updateScore(this.playerScore);
 
-      if (this.computer.allShipSunk()) {
+      if (this.computer.board.allShipSunk()) {
         console.log("All ships sunk, you've won!");
         this.turnMsg.textContent = "You've won!"
         this.isGameStarted = false;
@@ -179,7 +182,7 @@ export class Game {
     );
 
     this.player.receiveAttack(row, col);
-    const cellState = this.player.board[row][col];
+    const cellState = this.player.board.board[row][col];
 
     if (cellState === "miss") {
         playerCell.classList.add("miss");
@@ -191,7 +194,7 @@ export class Game {
         playerCell.textContent = "X";
         this.dom.updateScore(this.computerScore);
 
-        if (this.player.allShipSunk()) {
+        if (this.player.board.allShipSunk()) {
             console.log("All ships sunk, computer won!");
             console.log(this.player.ships)
             this.turnMsg.textContent = "Computer won!";

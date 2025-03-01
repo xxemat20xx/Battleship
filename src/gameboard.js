@@ -28,51 +28,67 @@
       startCol,
       length,
       shipId,
-      isHorizontal = true,
+      isHorizontal = true
     ) {
       const ship = new Ship(length, shipId); // Create ship instance once
+    
       for (let i = 0; i < length; i++) {
         const row = isHorizontal ? startRow : startRow + i;
         const col = isHorizontal ? startCol + i : startCol;
         const cell = boardElement.querySelector(
-          `.cell[data-row="${row}"][data-col="${col}"]`,
+          `.cell[data-row="${row}"][data-col="${col}"]`
         );
+    
         if (cell) {
           cell.classList.add("ship-placed");
           cell.setAttribute("data-ship-id", shipId);
-          this.ships.push(ship)
-          // Store the Ship instance to array
           this.board[row][col] = ship;
         }
       }
+    
+      this.ships.push(ship); // ✅ Ship instance is added only once
     }
+    
     computerPlaceShips(boardElement) {
       const lengths = [5, 4, 3, 2, 1];
       let shipId = 1;
+    
       lengths.forEach((length) => {
         let placed = false;
+    
         while (!placed) {
-          const row = Math.floor(Math.random() * 10);
-          const col = Math.floor(Math.random() * (10 - length));
-
-          if (this.canPlaceShip(boardElement, row, col, length)) {
+          const isHorizontal = Math.random() < 0.5; // Randomly decide orientation
+          const row = isHorizontal 
+            ? Math.floor(Math.random() * 10) 
+            : Math.floor(Math.random() * (10 - length)); // Ensure vertical ships fit
+          const col = isHorizontal 
+            ? Math.floor(Math.random() * (10 - length)) 
+            : Math.floor(Math.random() * 10); // Ensure horizontal ships fit
+    
+          if (this.canPlaceShip(boardElement, row, col, length, isHorizontal)) {
             const newShip = new Ship(length, `ship-${shipId}`);
-            this.ships.push(newShip);
-            this.placeShip(boardElement, row, col, length, newShip.id);
-
+            this.ships.push(newShip); // ✅ Add ship only once
+    
+            this.placeShip(boardElement, row, col, length, newShip.id, isHorizontal);
+    
+            // Update the DOM correctly
             for (let i = 0; i < length; i++) {
               const cell = boardElement.querySelector(
-                `.cell[data-row="${row}"][data-col="${col + i}"]`,
+                `.cell[data-row="${isHorizontal ? row : row + i}"][data-col="${isHorizontal ? col + i : col}"]`
               );
-              cell.classList.add("ship-placed", "computer-ship");
-              cell.setAttribute("data-ship-id", newShip.id);
+              if (cell) {
+                cell.classList.add("ship-placed", "computer-ship");
+                cell.setAttribute("data-ship-id", newShip.id);
+              }
             }
+    
             placed = true;
             shipId++;
           }
         }
       });
     }
+    
     receiveAttack(row, col) {
       const target = this.board[row][col];
 
